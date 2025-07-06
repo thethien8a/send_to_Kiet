@@ -29,6 +29,7 @@ logging.basicConfig(
         logging.StreamHandler(sys.stdout)
     ]
 )
+
 logger = logging.getLogger(__name__)
 
 class TechmemeScraper:
@@ -46,7 +47,7 @@ class TechmemeScraper:
         self.base_url = base_url
         self.session = requests.Session()
         self.session.headers.update({
-            'User-Agent': 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/91.0.4472.124 Safari/537.36'
+            'User-Agent': 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/138.0.0.0 Safari/537.36'
         })
         
     def get_page_content(self, url: str, retries: int = 3) -> Optional[BeautifulSoup]:
@@ -93,16 +94,8 @@ class TechmemeScraper:
         
         try:
             # Find article containers (adjust selectors based on actual HTML structure)
-            article_containers = soup.find_all('div', class_=['item', 'storylink'])
+            article_containers = soup.find_all('div', class_=['itc2'])
             
-            if not article_containers:
-                # Try alternative selectors
-                article_containers = soup.find_all('article')
-                
-            if not article_containers:
-                # Try finding links within common news container patterns
-                article_containers = soup.find_all('a', href=True)
-                
             logger.info(f"Found {len(article_containers)} potential article containers")
             
             for container in article_containers:
@@ -131,24 +124,20 @@ class TechmemeScraper:
             Dictionary with article data or None
         """
         article_data = {
-            'title': '',
             'url': '',
-            'description': '',
-            'timestamp': '',
-            'source': '',
-            'scraped_at': datetime.now().isoformat()
+            'title': '',
+            'date': '',
+            'author': '',
+            'content': '',
+            'error': False
         }
         
         try:
             # Extract title and URL
-            if container.name == 'a':
-                article_data['title'] = container.get_text(strip=True)
-                article_data['url'] = container.get('href', '')
-            else:
-                link = container.find('a', href=True)
-                if link:
-                    article_data['title'] = link.get_text(strip=True)
-                    article_data['url'] = link.get('href', '')
+            link = container.find('a',class_=["ourh"])
+            if link:
+                article_data['title'] = link.get_text(strip=True)
+                article_data['url'] = link.get('href', '')
             
             # Make URL absolute if it's relative
             if article_data['url'] and article_data['url'].startswith('/'):
