@@ -3,3 +3,8 @@
 beautifulsoup4>=4.12.0
 requests>=2.31.0
 lxml>=4.9.0
+
+# Installation instructions:
+# For standard pip: pip install -r requirements.txt
+# For uv: uv pip install -r requirements.txt
+# For conda: conda install beautifulsoup4 requests lxml

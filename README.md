@@ -20,8 +20,33 @@ cd Crawl-News
 ```
 
 ### 2. Cài đặt dependencies
+
+#### Tự động (Windows):
 ```bash
+setup.bat
+```
+
+#### Tự động (Linux/Mac):
+```bash
+chmod +x setup.sh
+./setup.sh
+```
+
+#### Thủ công:
+```bash
+# Sử dụng pip
 pip install -r requirements.txt
+
+# Hoặc sử dụng uv (nếu có)
+uv pip install -r requirements.txt
+
+# Hoặc cài đặt từng package
+pip install beautifulsoup4 requests lxml
+```
+
+### 3. Kiểm tra cài đặt
+```bash
+python -c "import requests, bs4, lxml; print('✅ Setup completed!')"
 ```
 
 ## 🚀 Sử dụng
