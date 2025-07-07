@@ -1,10 +1,18 @@
-# Techmeme News Scraper - Requirements
+# Crawl-News Project - Requirements
 
+# Core scraping libraries
 beautifulsoup4>=4.12.0
 requests>=2.31.0
 lxml>=4.9.0
 
+# Selenium for dynamic content and navigation
+selenium>=4.15.0
+
 # Installation instructions:
 # For standard pip: pip install -r requirements.txt
 # For uv: uv pip install -r requirements.txt
-# For conda: conda install beautifulsoup4 requests lxml
+# For conda: conda install beautifulsoup4 requests lxml selenium
+
+# Note: ChromeDriver is required for Selenium
+# Download from: https://chromedriver.chromium.org/
+# Or install via: pip install webdriver-manager
